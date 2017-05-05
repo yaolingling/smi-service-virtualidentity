@@ -1,0 +1,2 @@
+include ':virtualidentity'
+project(':virtualidentity').projectDir = new File(settingsDir, '../virtualidentity')
