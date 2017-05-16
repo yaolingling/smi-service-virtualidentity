@@ -27,6 +27,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * The Class Application.
+ */
 @Configuration
 @EnableAutoConfiguration
 @EnableSwagger2
@@ -36,11 +39,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableJpaRepositories("com.dell.isg.smi.virtualidentity.repository")
 public class Application extends WebMvcConfigurerAdapter {
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
 
+    /**
+     * Locale resolver.
+     *
+     * @return the locale resolver
+     */
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -49,6 +62,11 @@ public class Application extends WebMvcConfigurerAdapter {
     }
 
 
+    /**
+     * Locale change interceptor.
+     *
+     * @return the locale change interceptor
+     */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -57,12 +75,20 @@ public class Application extends WebMvcConfigurerAdapter {
     }
 
 
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry)
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
 
+    /**
+     * Api.
+     *
+     * @return the docket
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).groupName("virtualidentity").apiInfo(apiInfo()).select().paths(regex("/api/1.0/.*")).build();

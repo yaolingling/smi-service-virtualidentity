@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dell.isg.smi.commons.elm.model.PagedResult;
+import com.dell.isg.smi.commons.utilities.model.PagedResult;
 import com.dell.isg.smi.virtualidentity.model.AssignIdentities;
 import com.dell.isg.smi.virtualidentity.model.ReserveIdentities;
 import com.dell.isg.smi.virtualidentity.model.VirtualIdentityResponse;
 
+/**
+ * The Interface VirtualIdentityController.
+ */
 @RestController
 @Api(value = "/api/1.0/virtualIdentities", description = "/api/1.0/virtualIdentities")
 @RequestMapping("/api/1.0/virtualIdentities")
@@ -75,10 +78,10 @@ public interface VirtualIdentityController {
 
 
     /**
-     * Reserve Virtual Identities
-     * 
+     * Reserve Virtual Identities.
+     *
      * @param reserveIdentities (ReserveIdentities) object containing the type, quantity requested, and usageId to assign
-     * @return (List<String>) list of virtual Identity string values
+     * @return List list of virtual Identity string values
      */
     @ApiOperation(value = "Reserve Virtual Identities", notes = "Reserve Virtual Identities")
     @RequestMapping(value = "", method = RequestMethod.POST)

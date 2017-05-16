@@ -1,39 +1,8 @@
-# remove this section if enforcing security
-security:
-  ignored:
-   - /**
-  #oauth2:
-  #  client:
-  #    clientId: "spring-boot-demos"
-  #    clientSecret: "2f53b44a-774a-4394-8a98-138476503d24"
-  #    accessTokenUri: "http://100.68.123.174:8089/auth/realms/Test1/protocol/openid-connect/token"
-  #    userAuthorizationUri: "http://100.68.123.174:8089/auth/realms/Test1/protocol/openid-connect/auth"
-  #    tokenName: "oauth_token"
-  #    authenticationScheme: "header"
-  #    clientAuthenticationScheme: "header"
-  #  resource:
-  #    userInfoUri: "http://100.68.123.174:8089/auth/realms/Test1/protocol/openid-connect/userinfo"
-
 spring:
   profiles: default
-  jpa:
-    database: POSTGRESQL
-    properties:
-      hibernate:
-      #  schema-generation:
-      #        database:
-      #           action: create
-        default_schema: virtualidentity
-    show-sql: true
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-      #ddl-auto: create-drop
   datasource:
-    #testWhileIdle: true
-    #validationQuery: SELECT 1
     platform: postgres
-    url: jdbc:postgresql://docker-registry:5433/postgres
+    url: jdbc:postgresql://docker-registry:5432/postgres
     #url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: Dell123$
@@ -48,21 +17,8 @@ logging:
 
 spring:
   profiles: linked
-  autoconfigure.exclude: org.keycloak.adapters.springboot.KeycloakSpringBootConfiguration
-  jpa:
-    database: POSTGRESQL
-    properties:
-      hibernate:
-        default_schema: public
-    show-sql: true
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
   datasource:
     platform: postgres
     url: jdbc:postgresql://##SERVER##:##PORT##/postgres
     username: postgres
     password: ##PASSWORD##
-
-
-

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.dell.isg.smi.commons.elm.model.PagedResult;
+import com.dell.isg.smi.commons.utilities.model.PagedResult;
 import com.dell.isg.smi.virtualidentity.exception.EnumErrorCode;
 import com.dell.isg.smi.virtualidentity.exception.BadRequestException;
 import com.dell.isg.smi.virtualidentity.model.AssignIdentities;
@@ -22,6 +22,9 @@ import com.dell.isg.smi.virtualidentity.model.ReserveIdentities;
 import com.dell.isg.smi.virtualidentity.model.VirtualIdentityResponse;
 import com.dell.isg.smi.virtualidentity.service.IoIdentityManager;
 
+/**
+ * The Class VirtualIdentityControllerImpl.
+ */
 @Component
 public class VirtualIdentityControllerImpl implements VirtualIdentityController {
 

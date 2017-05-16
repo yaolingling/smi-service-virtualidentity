@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.dell.isg.smi.virtualidentity.service.IoIdentityManager;
 
+/**
+ * The Class ApplicationStartup.
+ */
 @Component
 public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -17,6 +20,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     IoIdentityManager ioIdentityManager;
 
 
+    /* (non-Javadoc)
+     * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+     */
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
         ioIdentityManager.initailizePools();
