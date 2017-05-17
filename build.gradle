@@ -1,10 +1,10 @@
+apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'java'
+apply plugin: 'org.sonarqube'
 apply plugin: 'nebula.rpm'
 apply plugin: 'nebula.deb'
-apply plugin: 'org.sonarqube'
 apply plugin: "com.github.hierynomus.license"
 //apply plugin: 'nebula.lint'
 
@@ -44,17 +44,22 @@ buildscript {
   }
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 //gradleLint {
 //  rules  = ['dependency-parentheses','overridden-dependency-version','duplicate-dependency-class', 'all-dependency','unused-dependency']
 //}
 
 sonarqube {
     properties {
-        property "sonar.projectName", "SMI :: Service :: Virtual Identity"
+        property "sonar.projectName", "rackhd :: smi-service-virtualidentity"
         property "sonar.projectKey", "${group}:service-virtualidentity"
     }
 }
-
 
 springBoot {
     executable = true
@@ -71,23 +76,19 @@ jar {
 repositories {
 	mavenLocal()
 	maven {
-		url "${artifactory_contextUrl}/libs-release"
+	    url "${artifactory_contextUrl}/${dependency_repo}"
 	}
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-}
 
 dependencies {
-    compile 'com.dell.isg.smi:commons-elm:1.0.36'
-    compile 'com.dell.isg.smi:virtualidentity:1.0.28'
-	compile "org.springframework.boot:spring-boot-starter-web"
-	compile "org.springframework.boot:spring-boot-starter-tomcat"
+    compile 'com.dell.isg.smi:commons-elm:1.0.76'
+    compile 'com.dell.isg.smi:commons-utilities:1.0.26'
+    compile 'com.dell.isg.smi:virtualidentity:1.0.35'
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.springframework.boot:spring-boot-starter-actuator"
-	compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile 'org.springframework.cloud:spring-cloud-starter-consul-all'
 
@@ -117,6 +118,7 @@ license {
 test {
     systemProperties 'property': 'value'
 }
+
 
 uploadArchives {
     repositories {

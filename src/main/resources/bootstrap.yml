@@ -1,3 +1,7 @@
+security:
+  ignored:
+   - /**
+
 server:
     port: 46015
 ---
@@ -13,6 +17,16 @@ spring:
       enabled: false
       config:
         enabled: false
+  jpa:
+    database: POSTGRESQL
+    properties:
+      hibernate:
+        default_schema: virtualidentity
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
 ---
 
 spring:
@@ -35,3 +49,24 @@ spring:
         #retry:
           #max-attempts: 60
           #initial-interval: 10000
+
+---
+
+spring:
+  profiles: linked
+  cloud:
+    bus:
+      enabled: false
+    consul:
+      enabled: false
+      config:
+        enabled: false
+  jpa:
+    database: POSTGRESQL
+    properties:
+      hibernate:
+        default_schema: virtualidentity
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
