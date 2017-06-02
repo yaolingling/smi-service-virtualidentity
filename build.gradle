@@ -98,6 +98,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
 
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
 
 	// needed for swagger
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
