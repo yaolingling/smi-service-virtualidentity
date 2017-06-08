@@ -15,9 +15,11 @@ def _url = 'http://support.dell.com'
 def _arch = 'x86_64'
 def _os = 'LINUX'
 def _release = 1
+def _sourcePaths=[]
 
 sourceCompatibility = 1.8
 version = "${version}"
+dockerTag = "${dockerTag}"
 group = 'com.dell.isg.smi'
 
 buildscript {
@@ -74,10 +76,10 @@ jar {
 }
 
 repositories {
-	mavenLocal()
 	maven {
 	    url "${artifactory_contextUrl}/${dependency_repo}"
 	}
+	mavenLocal()
 }
 
 
@@ -98,6 +100,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
 
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
 
 	// needed for swagger
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
@@ -243,4 +246,52 @@ task generateDeb(type: Deb){
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
+}
+
+
+eclipse {
+    project{
+    	buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
+    		
+		// assign natures in a groovy fashion:
+		natures = ['org.eclipse.buildship.core.gradleprojectnature']
+    }
+    
+    classpath {
+       downloadSources=true
+    }
+}
+
+
+task buildSourcePathsArray(dependsOn: 'eclipseClasspath' ){
+	doLast{
+		def classpathFile = file('.classpath')
+		if( classpathFile.exists() ) {
+			def cpXml = new XmlParser().parse(classpathFile)
+			cpXml.classpathentry.each {
+				if('lib' == it.@kind ) {
+					if( it.@sourcepath == null ){
+						println 'missing source jar for:' + it.@path
+					}
+					else{
+					 	_sourcePaths.add(it.@sourcepath)
+					}
+				}
+			}
+		}
+		 
+		def arrayLength = _sourcePaths.size()
+		println 'sourcePaths length is:' + arrayLength
+	}
+}
+
+
+task dependencySourcesZip(type: Zip, dependsOn: 'buildSourcePathsArray' ) {
+	destinationDir = project.file('build/distributions')
+	destinationDir.mkdirs()
+	baseName = "smi-service-virtualidentity-dependency-sources"
+	version = "${dockerTag}"
+	outputs.upToDateWhen { false }
+ 
+    from _sourcePaths
 }
