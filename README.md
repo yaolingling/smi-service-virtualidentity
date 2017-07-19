@@ -2,6 +2,8 @@
 
 A virtual identity (MAC,IQN,WWN) generation and reservation system.
 
+A docker container for this service is avalable at:  https://hub.docker.com/r/rackhd/virtualidentity/
+
 ### Purpose
 
 The Virtual Identity docker container runs a spring-boot micro-service that exposes a REST API for a user or application to reserve and assign virtual identities (MAC Addresses, IQN's, WWN's).
@@ -20,8 +22,6 @@ A user can “Release” a virtual identity back to the pool if it is no longer 
 
 ### How to Launch
 
-Under Construction. Docker container not yet published on DockerHub..... 
-
 ##### Option 1. Linking to a postgres database:
 1. Start the postgres database first
 ~~~
@@ -29,12 +29,12 @@ docker run --name postgresql -e POSTGRES_PASSWORD=foo -d postgres:9.6.1-alpine
 ~~~
 2. Start the virtualidentity docker container with the link option
 ~~~
-sudo docker run --name virtualidentity -p 0.0.0.0:46016:46016 --link=postgresql:db -e SPRING_PROFILES_ACTIVE=linked -e DB_POSTGRES_PASSWORD=foo -d rackhd/virtualidentity:latest
+sudo docker run --name virtualidentity -p 0.0.0.0:46015:46015 --link=postgresql:db -e SPRING_PROFILES_ACTIVE=linked -e DB_POSTGRES_PASSWORD=foo -d rackhd/virtualidentity:latest
 ~~~
 
 ##### Option 2. Passing connection settings in with the environment tag:
 ~~~
-docker run --name virtualidentity -p 0.0.0.0:46016:46016 -e DB_POSTGRES_PASSWORD=foo -e DB_PORT_5432_TCP_PORT=5432 -e DB_PORT_5432_TCP_ADDR=1.2.3.4 -d rackhd/virtualidentity:latest
+docker run --name virtualidentity -p 0.0.0.0:46015:46015 -e DB_POSTGRES_PASSWORD=foo -e DB_PORT_5432_TCP_PORT=5432 -e DB_PORT_5432_TCP_ADDR=1.2.3.4 -d rackhd/virtualidentity:latest
 ~~~
 ~~~
 
@@ -50,7 +50,7 @@ services:
     depends_on:
     - postgresql
     ports:
-    - 46016:46016
+    - 46015:46015
     volumes:
     - /var/log/dell/:/var/log/dell/
     mem_limit: 512m
@@ -109,7 +109,7 @@ services:
 Example properties posted to config\virtualidentity\data of the consul K\V store
 ~~~
 server:
-  port: 46016
+  port: 46015
  # ssl:
  #   key-store: /etc/ssl/keystore.jks
  #   key-store-password: changeit
@@ -166,6 +166,17 @@ security:
 A swagger UI is provided by the microservice at http://<ip>:46015/swagger-ui.html
 
 ---
+
+### Licensing
+This docker microservice is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.txt). 
+
+The microservice makes use of some dependent libraries that may be covered other other licenses, including the Hibernate Core library which is licensed under the [LGPL 2.1 license](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt).
+
+Source code for this microservice is available in repositories at https://github.com/RackHD.  
+
+In order to comply with the requirements of applicable licenses, the source for dependent libraries used by this microservice is available for download at:  https://bintray.com/rackhd/binary/download_file?file_path=smi-service-virtualnetwork-dependency-sources-devel.zip    
+
+Additionally the binary and source jars for all dependent packages are available for download on Maven Central.
 
 ### Support
 Slack Channel: codecommunity.slack.com
