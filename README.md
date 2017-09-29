@@ -4,6 +4,8 @@ A virtual identity (MAC,IQN,WWN) generation and reservation system.
 
 A docker container for this service is avalable at:  https://hub.docker.com/r/rackhd/virtualidentity/
 
+Copyright © 2017 Dell Inc. or its subsidiaries.  All Rights Reserved. 
+
 ### Purpose
 
 The Virtual Identity docker container runs a spring-boot micro-service that exposes a REST API for a user or application to reserve and assign virtual identities (MAC Addresses, IQN's, WWN's).
