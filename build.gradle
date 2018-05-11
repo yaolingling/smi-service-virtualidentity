@@ -29,7 +29,8 @@ buildscript {
     	springCloudVersion = 'Camden.SR5'
 	}
    repositories {
-    mavenLocal()
+        mavenLocal()
+        mavenCentral()
 	maven {
 		url "${artifactory_contextUrl}/libs-release"
 		url "https://plugins.gradle.org/m2/"
@@ -58,8 +59,8 @@ dependencyManagement {
 
 sonarqube {
     properties {
-        property "sonar.projectName", "rackhd :: smi-service-virtualidentity"
-        property "sonar.projectKey", "${group}:service-virtualidentity"
+        property "sonar.projectName", "rackhd::smi-service-virtualidentity"
+        property "sonar.projectKey", "${group}::service-virtualidentity"
     }
 }
 
