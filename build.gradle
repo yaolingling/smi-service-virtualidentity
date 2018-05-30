@@ -87,9 +87,9 @@ repositories {
 
 
 dependencies {
-    compile 'com.dell.isg.smi:commons-elm:1.0.76'
-    compile 'com.dell.isg.smi:commons-utilities:1.0.26'
-    compile 'com.dell.isg.smi:virtualidentity:1.0.35'
+    compile 'com.dell.isg.smi:commons-elm:'+commonsElmVersion
+    compile 'com.dell.isg.smi:commons-utilities:'+commonsUtilitiesVersion
+    compile 'com.dell.isg.smi:virtualidentity:'+virtualidentityVersion
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.springframework.boot:spring-boot-starter-actuator"
